@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<link rel="author" title="Andrew Comminos" href="mailto:acomminos@fb.com" />
+<link rel="help" href="http://www.w3.org/TR/css-flexbox-1/#painting" />
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<style>
+#container {
+  width: 1000px;
+  display: flex;
+}
+
+#left {
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(200, 200, 200, 0.8);
+}
+
+#right {
+  position: relative;
+  left: -100px;
+  width: 500px;
+  background-color: rgba(0, 128, 0, 0.8);
+}
+</style>
+<div id="container">
+  <a id="left" href="#">foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo</a>
+  <div id="right"></div>
+</div>
+<div id="log"></div>
+<script>
+  test(function(t)
+    {
+      var rightElement = document.getElementById("right");
+      var x = rightElement.offsetLeft + 10;
+      var y = rightElement.offsetTop + rightElement.offsetHeight / 2;
+
+      var element = document.elementFromPoint(x, y);
+      assert_equals(element.nodeName, 'DIV');
+      assert_equals(element.id, 'right');
+    }, "Flexboxes should perform hit testing in reverse paint order for overlapping elements: relative case (crbug.com/844505)");
+</script>
