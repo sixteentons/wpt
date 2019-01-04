@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<body style='background-color: green'>
+  <script>
+    var bc = new BroadcastChannel('portal');
+    bc.postMessage('loaded');
+    bc.close();
+  </script>
+</body>
